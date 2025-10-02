@@ -1,0 +1,69 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{float}
+
+\title{\textbf{Colonoscopy Polyps Segmentation Using ResUNet and Kvasir-SEG Dataset}}
+\author{Mahla Entezary}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Colorectal cancer is one of the leading causes of cancer-related deaths worldwide, and early detection of polyps through colonoscopy plays a crucial role in prevention. Manual polyp identification and segmentation during endoscopy can be time-consuming, subjective, and prone to error. Automated segmentation methods using deep learning provide accurate, real-time support to clinicians.  
+This project builds a deep learning model for polyp segmentation using public colonoscopy datasets. We performed exploratory data analysis (EDA), hypothesis testing, preprocessing, and augmentation strategies to train a ResUNet model with a ResNet34 encoder for robust segmentation performance.
+
+\section{Dataset}
+The primary dataset is \textbf{Kvasir-SEG} (1,000 images and masks), supported by CVC-ClinicDB (612 images) and the Merged Polyp Segmentation Dataset (MPSD, 22,330 images). These open-access datasets provide diverse polyp appearances and lighting conditions, ensuring robust generalization.
+
+\section{Exploratory Data Analysis}
+We analyzed image dimensions, aspect ratios, resolutions, polyp coverage, and pixel intensities. Findings included:
+\begin{itemize}
+    \item Most images are small (\(\sim250 \times 300\) pixels) and nearly square.
+    \item Polyp coverage is skewed toward low values (mean coverage slightly above 0.1).
+    \item Larger polyps dominate the dataset (>80\%), while small polyps are underrepresented.
+\end{itemize}
+
+\section{Hypothesis Testing}
+\begin{itemize}
+    \item Spearman correlation between resolution and polyp size: 0.169 (weak but significant).
+    \item T-test on portrait vs landscape orientation: p = 0.028 (small but significant difference).
+    \item Pearson correlation between polyp size and contrast: 0.081 (very weak correlation).
+\end{itemize}
+
+\section{Preprocessing and Augmentation}
+Images and masks were padded to squares, resized to \(256 \times 256\), and normalized using ImageNet statistics. Binary masks were generated for segmentation. Data augmentation included flips, rotations, brightness/contrast adjustments, HSV shifts, Gaussian blur, and translations to improve generalization.
+
+\section{Baseline Model}
+The baseline \textbf{ResUNet} architecture consists of:
+\begin{itemize}
+    \item Encoder: Convolutional layers with max-pooling.
+    \item Decoder: Upsampling layers with skip connections.
+    \item Loss function: Dice loss (\(L_{total}=L_{Dice}\)).
+\end{itemize}
+\textbf{Results}: Validation Dice = 0.94, IoU ≈ 0.86, Validation Loss = 0.04 after 20 epochs.
+
+\section{Enhanced Model}
+We enhanced the baseline using:
+\begin{itemize}
+    \item \textbf{ResNet34 encoder} (pretrained on ImageNet) for stronger feature extraction.
+    \item Hybrid loss function: \(L_{total}=L_{BCE}+L_{Dice}\) with class weighting.
+    \item Optimizer: AdamW with learning rate scheduling.
+\end{itemize}
+\textbf{Improved Results}: Validation Dice = 0.9587, IoU = 0.9541, Validation Loss = 0.0682. The enhanced model produced sharper boundaries, smoother contours, and fewer false positives.
+
+\section{Results}
+Key findings:
+\begin{itemize}
+    \item Subtle dataset biases exist (resolution, orientation, contrast) but do not dominate performance.
+    \item Enhanced ResUNet outperformed baseline in Dice and IoU metrics.
+    \item Training curves confirmed stable learning without overfitting.
+\end{itemize}
+
+\section{Conclusion}
+The enhanced ResUNet with a ResNet34 encoder and hybrid BCE + Dice loss significantly improved polyp segmentation performance. Transfer learning and tailored loss functions proved effective for imbalanced medical datasets. The model’s strong accuracy and qualitative outputs demonstrate its potential for real-world clinical applications and future research.
+
+\end{document}
