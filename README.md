@@ -1,10 +1,13 @@
-﻿# colonoscopy-polyps-segmentation
+# colonoscopy-polyps-segmentation
 ## Introduction
 Colorectal cancer is one of the leading causes of cancer-related deaths worldwide, and early detection of polyps through colonoscopy plays a crucial role in prevention. However, manual polyp identification and segmentation during endoscopic procedures can be time-consuming, subjective, and prone to human error. Automated segmentation methods powered by deep learning can provide accurate, real-time support to clinicians by highlighting polyps and improving diagnostic reliability.
 
 This project focuses on building a deep learning model for polyp segmentation using publicly available colonoscopy image datasets. We perform extensive exploratory data analysis (EDA) and hypothesis testing to understand dataset characteristics, apply preprocessing and augmentation strategies to standardize and enrich the data, and train a ResUNet model with a ResNet34 encoder to segment polyps at the pixel level. The goal is to create a robust system that generalizes across multiple datasets and imaging conditions, supporting the development of computer-aided diagnostic tools for clinical practice.
 
 **note**: the full code and result is saved in this [markdown file](Kvasir-SEG.md) and the outputs of the notebook is cleared.
+
+![Intensity Fingerprints](Kvasir-SEG_files/Intensity Fingerprints.png)
+
 ## Dataset
 Our project focuses on polyp segmentation in colonoscopy images, a critical task in computer-aided diagnosis for colorectal cancer prevention. The data used consists of colonoscopy frames paired with pixel-level binary masks that highlight the presence of polyps. Each image serves as an input for the model, while the corresponding mask provides the ground truth for supervised training. The segmentation masks are annotated by medical experts, ensuring high-quality labels that reflect clinically relevant regions.
 
