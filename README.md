@@ -6,7 +6,7 @@ This project focuses on building a deep learning model for polyp segmentation us
 
 **note**: the full code and result is saved in this [markdown file](Kvasir-SEG.md) and the outputs of the notebook is cleared.
 
-![Intensity Fingerprints](Kvasir-SEG_files/Intensity Fingerprints.png)
+![Intensity Fingerprints](Kvasir-SEG_files/Intensity-Fingerprints.png)
 
 ## Dataset
 Our project focuses on polyp segmentation in colonoscopy images, a critical task in computer-aided diagnosis for colorectal cancer prevention. The data used consists of colonoscopy frames paired with pixel-level binary masks that highlight the presence of polyps. Each image serves as an input for the model, while the corresponding mask provides the ground truth for supervised training. The segmentation masks are annotated by medical experts, ensuring high-quality labels that reflect clinically relevant regions.
